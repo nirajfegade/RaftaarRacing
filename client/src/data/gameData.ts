@@ -29,30 +29,51 @@ export const gameFeatures = [
 // Game Screenshots for Gallery Section
 export const gameScreenshots = [
   {
-    title: "Neon Highway Challenge",
-    description: "Race through the futuristic cityscape",
-    image: "https://images.unsplash.com/photo-1632359751231-0992fea7a02f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+    image: '/SANTAS-PITSOP-240x300.png',
+    title: 'High-Speed Racing',
+    description: 'Experience intense racing action on dynamic tracks'
   },
   {
-    title: "Jungle Speedway",
-    description: "Navigate through tropical obstacles",
-    image: "https://images.unsplash.com/photo-1517488629431-6427e0ee1e5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+    image: '/raftar.jpg',
+    title: 'Custom Vehicles',
+    description: 'Choose from a variety of customizable racing vehicles'
   },
   {
-    title: "Desert Dunes Circuit",
-    description: "Master the sandy tracks and jumps",
-    image: "https://images.unsplash.com/photo-1560253787-9def021d5f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+    image: '/unnamed (2).jpg',
+    title: 'Multiplayer Races',
+    description: 'Compete against players worldwide in thrilling races'
   },
   {
-    title: "Volcanic Velocity",
-    description: "Feel the heat on this extreme track",
-    image: "https://images.unsplash.com/photo-1511882150382-421056c89033?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+    image: '/unnamed (3).jpg',
+    title: 'Night Racing',
+    description: 'Master the art of night racing with dynamic lighting'
   },
   {
-    title: "Arctic Freeze Race",
-    description: "Slip and slide on icy terrain",
-    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+    image: '/unnamed (4).jpg',
+    title: 'Track Variety',
+    description: 'Race through diverse and challenging tracks'
+  },
+  {
+    image: '/unnamed (6).jpg',
+    title: 'Weather Effects',
+    description: 'Adapt to dynamic weather conditions during races'
+  },
+  {
+    image: '/unnamed (9).jpg',
+    title: 'Championship Mode',
+    description: 'Compete in intense championship tournaments'
+  },
+  {
+    title: 'Kart Racing',
+    image: '/slide-3-karts-1536x432.jpg',
+    description: 'Experience the thrill of kart racing'
+  },
+  {
+    title: 'Racing Track',
+    image: '\Field.jpg',
+    description: 'Where the rubber meets the track and every turn fuels the thrill'
   }
+
 ];
 
 // Team Members for Team Section

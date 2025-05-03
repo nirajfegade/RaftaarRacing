@@ -6,6 +6,8 @@ import Gallery from '@/components/Gallery';
 import Team from '@/components/Team';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import Plans from '@/components/Plans'; // adjust the path if needed
+
 
 export default function Home() {
   useEffect(() => {
@@ -36,6 +38,7 @@ export default function Home() {
       <Hero />
       <Features />
       <Gallery />
+      <Plans /> 
       <Team />
       <Contact />
       <Footer />

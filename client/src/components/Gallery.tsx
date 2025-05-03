@@ -5,6 +5,9 @@ import { gameScreenshots } from '@/data/gameData';
 export default function Gallery() {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const frameWidth = 360;
+  const [muted, setMuted] = useState(true);
 
   const scrollToSlide = (index: number) => {
     setActiveIndex(index);
@@ -26,6 +29,14 @@ export default function Gallery() {
     }
   };
 
+  const toggleMute = () => setMuted(prev => !prev);
+
+  const videos = [
+    { title: 'Official Teaser', src: '/trailer1.mp4' },
+    { title: 'Gameplay Preview', src: '/trailer2.mp4' },
+    { title: 'Behind the Scenes', src: '/trailer3.mp4' }
+  ];
+
   return (
     <section id="screenshots" className="py-20 bg-darker clip-path-diagonal relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
@@ -46,8 +57,28 @@ export default function Gallery() {
             Take a sneak peek at the high-octane action and vibrant world of RAFTAAR.
           </p>
         </motion.div>
-        
+
         <div className="relative">
+          <button 
+            onClick={() => scrollToSlide(activeIndex - 1)} 
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-4 rounded-xl bg-black/40 backdrop-blur-sm text-white hover:bg-black/60 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            disabled={activeIndex === 0}
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <button 
+            onClick={() => scrollToSlide(activeIndex + 1)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-4 rounded-xl bg-black/40 backdrop-blur-sm text-white hover:bg-black/60 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            disabled={activeIndex === gameScreenshots.length - 1}
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
           <div 
             ref={carouselRef} 
             className="carousel flex overflow-x-auto pb-6 -mx-4 px-4 gap-4 hide-scrollbar"
@@ -78,7 +109,7 @@ export default function Gallery() {
               </motion.div>
             ))}
           </div>
-          
+
           <div className="flex justify-center mt-6 gap-2">
             {gameScreenshots.map((_, index) => (
               <button 
@@ -90,7 +121,7 @@ export default function Gallery() {
             ))}
           </div>
         </div>
-        
+
         <motion.div 
           className="mt-16 text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -102,22 +133,68 @@ export default function Gallery() {
             className="text-2xl font-bold mb-6 text-light"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
-            Watch the Trailer
+            Watch the Trailers
           </h3>
-          <div className="max-w-4xl mx-auto aspect-video bg-dark/50 rounded-xl overflow-hidden">
-            <div className="w-full h-full flex items-center justify-center cursor-pointer group">
-              <img 
-                src="https://images.unsplash.com/photo-1548443690-54c461018b05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
-                alt="Game trailer thumbnail" 
-                className="w-full h-full object-cover opacity-70 transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute">
-                <div className="w-20 h-20 rounded-full bg-primary/80 flex items-center justify-center shadow-lg transform transition-transform duration-300 group-hover:scale-110">
-                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"></path>
-                  </svg>
+
+          <div className="relative max-w-[400px] mx-auto">
+            <button 
+              onClick={() => scrollRef.current?.scrollBy({ left: -frameWidth, behavior: 'smooth' })}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 text-white rounded-full hover:bg-black/70 transition"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <button 
+              onClick={() => scrollRef.current?.scrollBy({ left: frameWidth, behavior: 'smooth' })}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-black/40 text-white rounded-full hover:bg-black/70 transition"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <div
+              ref={scrollRef}
+              className="flex overflow-x-auto scroll-smooth hide-scrollbar snap-x snap-mandatory"
+            >
+              {videos.map((video, index) => (
+                <div key={index} className="flex-shrink-0 w-[360px] h-[640px] snap-center px-2">
+                  <div className="relative rounded-2xl overflow-hidden shadow-xl bg-black">
+                    <video
+                      autoPlay
+                      loop
+                      muted={muted}
+                      playsInline
+                      className="w-full h-full object-cover"
+                      preload="auto"
+                    >
+                      <source src={video.src} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+
+                    <button
+                      onClick={toggleMute}
+                      className="absolute top-3 right-3 bg-black/60 text-white p-2 rounded-full hover:bg-black/80"
+                    >
+                      {muted ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5v14l11-7M19 5L5 19" />
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5v14l11-7" />
+                        </svg>
+                      )}
+                    </button>
+
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-sm px-4 py-2 text-left">
+                      {video.title}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </motion.div>
