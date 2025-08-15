@@ -7,7 +7,14 @@ export default function Gallery() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const frameWidth = 360;
-  const [muted, setMuted] = useState(true);
+  const videos = [
+    { title: 'Official Teaser', src: '/trailer1.mp4' },
+    { title: 'Gameplay Preview', src: '/trailer2.mp4' },
+    { title: 'Behind the Scenes', src: '/trailer3.mp4' }
+  ];
+
+  const [mutedStates, setMutedStates] = useState(videos.map(() => true));
+
 
   const scrollToSlide = (index: number) => {
     setActiveIndex(index);
@@ -29,14 +36,35 @@ export default function Gallery() {
     }
   };
 
-  const toggleMute = () => setMuted(prev => !prev);
+  const toggleMute = (index: number) => {
+    setMutedStates(prev => prev.map((_, i) => i === index ? !prev[i] : true));
+  };
 
-  const videos = [
-    { title: 'Official Teaser', src: '/trailer1.mp4' },
-    { title: 'Gameplay Preview', src: '/trailer2.mp4' },
-    { title: 'Behind the Scenes', src: '/trailer3.mp4' }
-  ];
-
+  const handleVideoScroll = () => {
+    if (!scrollRef.current) return;
+  
+    const videos = scrollRef.current.querySelectorAll('video');
+    const containerRect = scrollRef.current.getBoundingClientRect();
+  
+    let updatedMuteStates: boolean[] = [];
+  
+    videos.forEach((video, index) => {
+      const videoRect = video.getBoundingClientRect();
+      const fullyInView =
+        videoRect.left >= containerRect.left &&
+        videoRect.right <= containerRect.right;
+  
+      updatedMuteStates[index] = !fullyInView; // mute if not fully in view
+    });
+  
+    // If none are in view, mute all
+    if (!updatedMuteStates.includes(false)) {
+      updatedMuteStates = updatedMuteStates.map(() => true);
+    }
+  
+    setMutedStates(updatedMuteStates);
+  };
+  
   return (
     <section id="screenshots" className="py-20 bg-darker clip-path-diagonal relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
@@ -157,44 +185,46 @@ export default function Gallery() {
 
             <div
               ref={scrollRef}
+              onScroll={handleVideoScroll}
               className="flex overflow-x-auto scroll-smooth hide-scrollbar snap-x snap-mandatory"
             >
               {videos.map((video, index) => (
-                <div key={index} className="flex-shrink-0 w-[360px] h-[640px] snap-center px-2">
-                  <div className="relative rounded-2xl overflow-hidden shadow-xl bg-black">
-                    <video
-                      autoPlay
-                      loop
-                      muted={muted}
-                      playsInline
-                      className="w-full h-full object-cover"
-                      preload="auto"
-                    >
-                      <source src={video.src} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+  <div key={index} className="flex-shrink-0 w-[360px] h-[640px] snap-center px-2">
+    <div className="relative rounded-2xl overflow-hidden shadow-xl bg-black">
+      <video
+        autoPlay
+        loop
+        muted={mutedStates[index]}
+        playsInline
+        className="w-full h-full object-cover"
+        preload="auto"
+      >
+        <source src={video.src} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-                    <button
-                      onClick={toggleMute}
-                      className="absolute top-3 right-3 bg-black/60 text-white p-2 rounded-full hover:bg-black/80"
-                    >
-                      {muted ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5v14l11-7M19 5L5 19" />
-                        </svg>
-                      ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5v14l11-7" />
-                        </svg>
-                      )}
-                    </button>
+      <button
+        onClick={() => toggleMute(index)}
+        className="absolute top-3 right-3 bg-black/60 text-white p-2 rounded-full hover:bg-black/80"
+      >
+        {mutedStates[index] ? (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5v14l11-7M19 5L5 19" />
+          </svg>
+        ) : (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5v14l11-7" />
+          </svg>
+        )}
+      </button>
 
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-sm px-4 py-2 text-left">
-                      {video.title}
-                    </div>
-                  </div>
-                </div>
-              ))}
+      <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-sm px-4 py-2 text-left">
+        {video.title}
+      </div>
+    </div>
+  </div>
+))}
+
             </div>
           </div>
         </motion.div>

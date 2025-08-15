@@ -64,18 +64,7 @@ export default function Hero() {
             </Button>
           </motion.div>
 
-          <motion.div
-            className="mt-20 flex gap-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-          >
-            <img src="https://img.icons8.com/color/48/steam.png" alt="Steam" className="w-10 h-10 opacity-80 hover:opacity-100 transition-opacity cursor-pointer" />
-            <img src="https://img.icons8.com/color/48/epic-games.png" alt="Epic Games" className="w-10 h-10 opacity-80 hover:opacity-100 transition-opacity cursor-pointer" />
-            <img src="https://img.icons8.com/color/48/play-station.png" alt="PlayStation" className="w-10 h-10 opacity-80 hover:opacity-100 transition-opacity cursor-pointer" />
-            <img src="https://img.icons8.com/color/48/xbox--v1.png" alt="Xbox" className="w-10 h-10 opacity-80 hover:opacity-100 transition-opacity cursor-pointer" />
-            <img src="https://img.icons8.com/color/48/nintendo-switch.png" alt="Nintendo Switch" className="w-10 h-10 opacity-80 hover:opacity-100 transition-opacity cursor-pointer" />
-          </motion.div>
+          
         </div>
       </div>
 
